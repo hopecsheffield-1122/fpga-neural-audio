@@ -1,0 +1,2 @@
+# Rerun 2026-09-13 (console captured, rtneural_c9_*_rerun_20260913.log): outputs byte-identical to 2026-08-17 (Eigen 5D3FFDB8..., STL 8DBE6AF0...).
+# Rerun 2026-09-13, console captured (rtneural_c9_*_rerun_20260913.log): Eigen 25,653 samples/s = 0.534x RT, ESR -42.42 dB; STL 15,901 samples/s = 0.331x RT, ESR -101.96 dB. Outputs byte-identical to 2026-08-17 (Eigen 5D3FFDB8..., STL 8DBE6AF0...). Paper reports the 2026-08-16 run (0.571x / 0.331x).

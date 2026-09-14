@@ -1,0 +1,21 @@
+  idmt-gtr2        LATENCY(+15)~j+1   439.6 s -> 403 train + 45 val segs
+  idmt-gtr4-sg     LATENCY(+15)       364.6 s -> 334 train + 37 val segs
+  nam              LATENCY(+15)       187.7 s -> 172 train + 19 val segs
+  prvt-gtr         LATENCY(+15)       315.6 s -> 289 train + 32 val segs
+  yt-bass          LATENCY(+15)       605.6 s -> 555 train + 62 val segs
+cell V100_F050_D100_M000 [split=trainval]: 1753 train / 195 val segments of 47104 samples (31.9 min total)
+checkpoint: epoch 440, H=40, skip=False, train-time val ESR -17.75 dB
+
+subset          segs  identity  opt-gain    (g)    model  model-lin  mrstft
+---------------------------------------------------------------------------
+idmt-gtr2         45     -1.00     -2.72   3.96   -19.80     -17.09   3.482
+idmt-gtr4-sg      37     -1.97     -1.98   1.03   -17.66     -15.68   4.358
+nam               19     -1.03     -1.66   2.37   -17.81     -16.15  10.418
+prvt-gtr          32     -1.65     -1.79   1.34   -20.20     -18.41  10.182
+yt-bass           62     -1.68     -1.79   0.82   -16.23     -14.45   3.063
+---------------------------------------------------------------------------
+ALL              195     -1.51     -1.51   1.01   -17.72     -16.21   5.304
+
+(all values plain ESR in dB, washout excluded; 'model-lin' = model minus opt-gain,
+ i.e. the dB the network adds beyond the best single-gain linear predictor;
+ mrstft = multi-resolution STFT loss of the model, lower is better)

@@ -1,0 +1,37 @@
+sentinel,SPAN-PERSRC-REV5-20260906,tau,-20.0,theta,-0.5,hump_tol,0.0,aligned_tol,0.5,min_drop,20.0
+cell,src,w_esr,w_odg,span,nmr_hump_w,nmr_hump_w_aligned,nmr_local_maxima
+rodent_max,bass,16,19,3,13,13,w13:3.930(+3.310)
+rodent_max,gtr4ib,16,17,1,9,13,w9:10.150(+2.380);w11:3.590(+0.320);w13:2.900(+1.410)
+rodent_mod,bass,14,16,2,9,12,w9:17.550(+1.510);w12:10.450(+2.040)
+rodent_mod,gtr4ib,14,17,3,9,12,w9:20.010(+6.890);w12:15.650(+4.990)
+gt_max,bass,13,16,3,,,none
+gt_max,gtr4ib,13,18,5,,,none
+gt_mod,bass,13,16,3,,,none
+gt_mod,gtr4ib,12,16,4,,,none
+fl_max,bass,15,20,5,9,14,w9:9.130(+0.080);w14:6.690(+4.590)
+fl_max,gtr4ib,14,18,4,14,14,w14:8.260(+3.740)
+fl_mod,bass,15,18,3,12,12,w9:0.170(+0.010);w12:6.510(+3.560)
+fl_mod,gtr4ib,15,17,2,14,14,w14:4.570(+1.040)
+
+clause,verdict,detail
+H1,HIT,min span 1
+H2,MISS,"outside [2,6]: [1]"
+H3,HIT,0 undefined of 12 []
+H4,MISS,"rodent_max/bass: hump 13 vs [12,15] HIT | rodent_max/gtr4ib: hump 9 vs [12,15] MISS | rodent_mod/bass: hump 9 vs [11,13] MISS | rodent_mod/gtr4ib: hump 9 vs [11,13] MISS | fl_max/bass: hump 9 vs [12,14] MISS | fl_max/gtr4ib: hump 14 vs [12,14] HIT | fl_mod/bass: hump 12 vs [12,14] HIT | fl_mod/gtr4ib: hump 14 vs [12,14] HIT | gt_max/bass: monotone HIT | gt_max/gtr4ib: monotone HIT | gt_mod/bass: monotone HIT | gt_mod/gtr4ib: monotone HIT"
+H4_aligned,HIT,"rule last_qualifying_max prominence>0.5 drop>=20: rodent_max/bass: hump 13 vs [12,15] HIT | rodent_max/gtr4ib: hump 13 vs [12,15] HIT | rodent_mod/bass: hump 12 vs [11,13] HIT | rodent_mod/gtr4ib: hump 12 vs [11,13] HIT | fl_max/bass: hump 14 vs [12,14] HIT | fl_max/gtr4ib: hump 14 vs [12,14] HIT | fl_mod/bass: hump 12 vs [12,14] HIT | fl_mod/gtr4ib: hump 14 vs [12,14] HIT | gt_max/bass: monotone HIT | gt_max/gtr4ib: monotone HIT | gt_mod/bass: monotone HIT | gt_mod/gtr4ib: monotone HIT"
+H5,descriptive,"all-positive grid cells 5src 13/15, 7src 13/15"
+H5_grid7,tau=-10,theta=-0.2,7,6,7,7,7,6
+H5_grid7,tau=-10,theta=-0.5,5,5,6,5,6,5
+H5_grid7,tau=-10,theta=-1,3,3,4,4,4,3
+H5_grid7,tau=-15,theta=-0.2,6,5,6,6,7,5
+H5_grid7,tau=-15,theta=-0.5,4,4,5,4,6,4
+H5_grid7,tau=-15,theta=-1,2,2,3,3,4,2
+H5_grid7,tau=-20,theta=-0.2,5,5,6,5,7,5
+H5_grid7,tau=-20,theta=-0.5,3,4,5,3,6,4
+H5_grid7,tau=-20,theta=-1,1,2,3,2,4,2
+H5_grid7,tau=-25,theta=-0.2,4,4,5,4,6,5
+H5_grid7,tau=-25,theta=-0.5,2,3,4,2,5,4
+H5_grid7,tau=-25,theta=-1,0,1,2,1,3,2
+H5_grid7,tau=-30,theta=-0.2,4,3,4,4,5,4
+H5_grid7,tau=-30,theta=-0.5,2,2,3,2,4,3
+H5_grid7,tau=-30,theta=-1,0,0,1,1,2,1

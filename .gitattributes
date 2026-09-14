@@ -1,0 +1,25 @@
+# Auto-detect text files and enforce LF line endings in the repo
+* text=auto eol=lf
+
+# Explicitly mark binary files to prevent any line-ending conversion
+*.png binary
+*.jpg binary
+*.pdf binary
+*.wav binary
+*.mp3 binary
+*.flac binary
+*.npz binary
+*.pt binary
+*.pth binary
+*.ckpt binary
+reports/** -text
+results/** -text
+repro/** -text
+*.rpt -text
+*.csv -text
+
+reports/** -text
+results/** -text
+repro/** -text
+*.rpt -text
+*.csv -text

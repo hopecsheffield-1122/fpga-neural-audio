@@ -1,0 +1,19 @@
+INFO: [SIM 2] *************** CSIM start ***************
+   Compiling <HLS_SRC>/gt_max/gru_va_tanh_0_tb.cpp in debug mode
+   Compiling <HLS_SRC>/gt_max/gru_load.cpp in debug mode
+   Compiling <HLS_SRC>/gt_max/gru_va_col_fused_mac3.cpp in debug mode
+   Generating csim.exe
+Loaded: 5201 weights, 4096 samples
+Preload done
+---- C-sim vs PyTorch FP32 golden ----
+cosine similarity : 0.997804
+ESR vs golden     : -23.53 dB
+max abs error     : 2.871478e-02 at sample 2056
+RMSE              : 9.668393e-03
+normalized RMSE   : 6.661752e-02
+mean error        : -3.652784e-04
+first 5 pairs (golden, hls): (0.02006, 0.02255) (-0.05171, -0.04202) (0.03572, 0.01917) (-0.05557, -0.06131) (0.00906, 0.00723) 
+FAIL: cosine 0.997804 < 0.999
+INFO [HLS SIM]: The maximum depth reached by any hls::stream() instance in the design is 4096
+ERR: [SIM 100] 'csim_design' failed: nonzero return value.
+INFO: [SIM 3] *************** CSIM finish ***************

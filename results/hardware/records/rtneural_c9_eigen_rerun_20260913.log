@@ -1,0 +1,7 @@
+== RTNARM-REV3-2026-08-16 ==
+input:  9007200 samples (36028800 bytes)
+PASS1 slice  : 262144 samples in 10.208 s -> 25681.0 samples/s, 38.939 us/sample, 0.535x RT@48k
+PASS2 full   : 9007200 samples in 351.122 s -> 25652.7 samples/s, 38.982 us/sample, 0.534x RT@48k
+ESR-vs-ref (skip 1024): -42.42 dB  [pre-reg band adjudicated manually]
+output written: rtneural_nam_out_rerun_20260913.f32 (36028800 bytes)
+== RTNARM-REV3-2026-08-16 COMPLETE ==

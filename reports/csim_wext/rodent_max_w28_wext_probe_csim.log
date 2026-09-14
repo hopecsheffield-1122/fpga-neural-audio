@@ -1,0 +1,22 @@
+INFO: [SIM 2] *************** CSIM start ***************
+   Compiling ../../../../../repro_pack/src/gru_va_tb_fm2.cpp in release mode
+   Compiling ../../../../../repro_pack/src/gru_load.cpp in release mode
+   Compiling ../../../../../repro_pack/src/gru_va_col_fused_mac3.cpp in release mode
+   Generating csim.exe
+Weights: compiled-in ROM (weights.h); dummy preload buffer
+Preload done
+Loaded: 5201 weights, 4096 samples
+Golden-mode output dumped: C:/hb/wext_probe/out/golden_wext_w28.f32 (4096 samples)
+FORMAT: DT_W=ap_fixed<28,5> DT_ACT=ap_fixed<28,2> ACC=ap_fixed<32,12>
+---- C-sim vs PyTorch FP32 golden ----
+cosine similarity : 1.000000
+ESR vs golden     : -90.71 dB
+max abs error     : 2.669543e-05 at sample 1609
+RMSE              : 3.546630e-06
+normalized RMSE   : 2.913760e-05
+mean error        : 5.789470e-07
+first 5 pairs (golden, hls): (-0.01250, -0.01251) (0.09882, 0.09882) (0.12368, 0.12368) (0.11003, 0.11003) (0.13615, 0.13616) 
+PASS
+INFO [HLS SIM]: The maximum depth reached by any hls::stream() instance in the design is 4096
+INFO: [SIM 1] CSim done with 0 errors.
+INFO: [SIM 3] *************** CSIM finish ***************

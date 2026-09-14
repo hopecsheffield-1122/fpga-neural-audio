@@ -1,0 +1,5 @@
+CAMPAIGN102-PROVENANCE-20260910
+result=102/102 MATCH by MD5 against <BITGEN>\out_met_timing
+left=<EVIDENCE>\board\campaign102
+right=<BITGEN>\out_met_timing
+note=nas\bitgen\build_manifest.csv is the ORIGINAL run (contains timing failures); out_met_timing is the timing-met set of record

@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Testing and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Type checking and linting caches
+.mypy_cache/
+.ruff_cache/
+
+# IDE and editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project-specific: training and experiment outputs
+results/*.npz
+results/*.wav
+results/*.pt
+results/*.pth
+results/*.ckpt
+results/*.png
+results/*.pdf
+!results/.gitkeep
+
+# HLS build artifacts
+hls/solution*/
+hls/*.log
+hls/*.jou
+hls/vivado*.log
+hls/vivado*.jou
+hls/.Xil/
+hls/*.prj/

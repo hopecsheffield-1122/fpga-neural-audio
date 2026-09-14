@@ -1,0 +1,53 @@
+[project]
+name = "fpga-neural-audio"
+version = "0.1.0"
+description = "FPGA-accelerated neural audio effect modeling"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{name = "Hope Sheffield"}]
+dependencies = [
+    "torch>=2.0",
+    "numpy",
+    "scipy",
+    "soundfile",
+]
+
+[project.optional-dependencies]
+repro = [
+    "numpy",
+    "matplotlib",
+    "openpyxl",
+]
+dev = [
+    "ruff",
+    "mypy",
+    "pytest",
+]
+
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "I",
+    "B",
+    "UP",
+]
+ignore = [
+    "E501",
+]
+
+[tool.mypy]
+python_version = "3.11"
+strict = false
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

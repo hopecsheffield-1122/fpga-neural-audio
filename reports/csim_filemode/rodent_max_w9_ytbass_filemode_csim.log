@@ -1,0 +1,13 @@
+INFO: [SIM 2] *************** CSIM start ***************
+   Compiling ../../../../../../src/gru_va_tb_fm2.cpp in release mode
+   Compiling ../../../../../../src/gru_load.cpp in release mode
+   Compiling ../../../../../../src/gru_va_col_fused_mac3.cpp in release mode
+   Generating csim.exe
+Weights: compiled-in ROM (weights.h); dummy preload buffer
+Preload done
+File mode: 29071200 samples, chunk 65536
+FORMAT: DT_W=ap_fixed<9,5> DT_ACT=ap_fixed<9,2> ACC=ap_fixed<32,12>
+File mode complete: 29071200 samples, 444 chunks -> <ELLE_HB>/out/elle_w9_ytbass_out.f32
+INFO [HLS SIM]: The maximum depth reached by any hls::stream() instance in the design is 65536
+INFO: [SIM 1] CSim done with 0 errors.
+INFO: [SIM 3] *************** CSIM finish ***************
