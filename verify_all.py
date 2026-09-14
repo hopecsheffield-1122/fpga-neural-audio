@@ -13,7 +13,7 @@
 #      and one timing report per deployed build named in results/hardware/resources_by_width_REV1.csv.
 #   3. Artifacts of record — MD5 of the figure inputs and the two DSP-binding csynth reports (scrubbed copies).
 #   4. Bitstream zip — MD5 and entry count against results/hardware/records/campaign102_bitstreams_zip_md5.txt.
-#   5. Paper claims — runs scripts/verify_paper_claims_REV4.py; its block [7] asserts every submitted digit.
+#   5. Paper claims — runs scripts/verify_paper_claims_REV4.py; its block [7] asserts every manuscript claim encoded in its CLAIM table.
 #   6. Table 2 — runs scripts/verify_resources_REV2.py: every row of resources_by_width_REV1.csv vs reports/impl.
 # Exit code 0 only if all six steps pass.
 import os, sys, csv, hashlib, subprocess, zipfile, re
@@ -70,7 +70,7 @@ report('bitstreams zip has 204 entries (102 .bit + 102 .hwh)', n == 204, f'{n} e
 # 5. Paper claims — gated
 print('\n=== scripts/verify_paper_claims_REV4.py ===')
 r = subprocess.run([sys.executable, 'scripts/verify_paper_claims_REV4.py', '.'])
-report('paper claims: every submitted digit reproduced (verify_paper_claims_REV4 block [7])', r.returncode == 0, f'exit {r.returncode}')
+report('paper claims: every claim encoded in verify_paper_claims_REV4 CLAIM table reproduced (block [7])', r.returncode == 0, f'exit {r.returncode}')
 
 # 6. Table 2 resources vs reports
 print('\n=== scripts/verify_resources_REV2.py ===')

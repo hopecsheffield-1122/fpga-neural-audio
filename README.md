@@ -41,7 +41,7 @@ MANIFEST.csv  path + MD5 for every tracked file
 |---|---|---|---|
 | Table 1 (mean span grid), per-model spans {+3,+4,+5,+3,+6,+4}, mean 4.2 | Sec. 4.1 | `results/analysis/check1_gap_grid.csv` | `scripts/gap_grid_REV2.py`; `scripts/verify_paper_claims_REV4.py` block [4b] |
 | Per-source spans +2…+6, 29 of 30 defined | Sec. 4.1 | `results/analysis/check1_transparency_gap.csv` | `scripts/span_persource_REV6.py`; verifier block [4] |
-| Test-segregated spans {+2,+3,+4,+3,+4,+3}, mean 3.2 | Sec. 4.1 | `results/analysis/heldout_srcmean_span_REV1.csv`, `span_heldout_REV5.csv` | `scripts/heldout_srcmean_span_REV1.py` |
+| Test-segregated spans {+2,+3,+4,+3,+4,+3}, mean 3.2 | Sec. 4.1 | `results/analysis/heldout_srcmean_span_REV1.csv`, `span_heldout_REV5.csv` | `scripts/heldout_srcmean_span_REV1.py`; verifier block [8] |
 | NMR vs GstPEAQ NMR, r = 0.997, −1.7 dB | Sec. 3.3 | `results/metrics/matrices/nmr_510.csv`, `results/metrics/raw/peaq_fleet_REV3.csv` (`total_nmr`) | verifier block [5] |
 | Fig. 1 | Sec. 4.1 | `results/metrics/matrices/esr_510.csv`, `nmr_510.csv`, `odg_510.csv` | `scripts/make_fig1_public_REV1.py` |
 | Fig. 2 (coherence, flatness, level correlation) | Sec. 4.2 | `results/analysis/errspec_T1T3_REV4_510.csv`, `errlevel_T5_REV2_510.csv` | `scripts/make_fig2_REV20.py` (MD5-gated inputs); verifier block [6] |
@@ -49,13 +49,13 @@ MANIFEST.csv  path + MD5 for every tracked file
 | W = 24 as sweep top ("flattened at 23 bits") | Sec. 3.2 | `reports/csim/rodent_max_w2{1,2,3,4}_gru_va_csim.log`, `reports/csim_wext/` (W = 28, 32) | grep `ESR vs golden` |
 | Golden-mode C-sim ≡ board, 102/102 | Sec. 3.3 | `results/hardware/records/b1_gate_results.csv`, `reports/csim/` | `scripts/b1_compare.py` |
 | File-mode board ≡ C-sim, rodent_max, 5 trainval sources × 17 W = 85/85 | Sec. 3.3 | `records/anchor_filemode_equiv_music_REV2.csv` (68/68), `records/anchor_filemode_equiv_nam_REV1.csv` (17/17), `reports/csim_filemode/` | — |
-| Kernel 140.5–142.5 cycles/sample, 14.6–14.8× RT; end-to-end 14.0–14.2× (Table 2 xRT) | Sec. 4.3 | `results/hardware/campaign_results.csv` (`cyc_hw`, `x_rt`, `fl_x_rt`) | `scripts/gen_grover_table_REV3.py` |
+| Kernel 140.5–142.5 cycles/sample, 14.6–14.8× RT; end-to-end 14.0–14.2× (Table 2 xRT) | Sec. 4.3 | `results/hardware/campaign_results.csv` (`cyc_hw`; kernel xRT = 100 MHz / `cyc_hw` / 48 kHz; `fl_x_rt` end-to-end) | `scripts/gen_grover_table_REV3.py`; verifier block [8] |
 | Table 2 BRAM/FF/LUT/DSP | Sec. 4.3 | `results/hardware/resources_placed_by_width_REV1.csv`, `placed_util_per_build_REV1.csv`; per-build `reports/impl/*_utilization_placed.rpt` | `scripts/harvest_placed_util_REV2.py`; `scripts/verify_resources_REV2.py` (102/102 vs reports) |
 | FuzzyLogic 'maximum' W = 19 → 20: +5k LUT, −5 DSP; W = 14 → 20: +6.6k LUT (12 % of device), −2 DSP, +1 BRAM | Sec. 4.3 | `results/hardware/resources_by_width_REV1.csv`; `reports/csynth/fl_max_w19_csynth.rpt`, `fl_max_w20_csynth.rpt` (Bind Op: 1 vs 2 DSP per multiply); `reports/impl/gru_L20_fl_max_w19_*`, `_w20_*` | — |
 | ARM A9 RTNeural baseline 0.571× (Eigen) / 0.331× (STL) | Sec. 4.3 | `scripts/rtneural_arm_baseline_REV3.cpp`, `results/hardware/records/rtneural_arm_baseline_md5.txt`, `rtneural_c9_*_rerun_20260913.log` | on the board only |
 | Training recipe (H = 40, lr 3e-3, TBPTT 2048, washout 1024, A-weighting pre-emphasis) | Sec. 3.1 | `models/<cell>/train_log.txt` (lr, pre-emphasis, TBPTT/washout in the cache tag); checkpoint shapes for H | `scripts/train_spike.py` |
 
-`scripts/verify_paper_claims_REV4.py` runs blocks [1]–[6] from the CSVs above, then block [7] asserts every computed value against the submitted digits hard-coded at the top of the script (exit 1 on any mismatch). `verify_all.py` runs it as step 5 of the one-command repository check, together with the MANIFEST, report-count, artifact-MD5, bitstream-zip and Table 2 checks; its exit code is 0 only if all six steps pass:
+`scripts/verify_paper_claims_REV4.py` runs blocks [1]–[6] from the CSVs above, then block [7] asserts every computed value against the manuscript claims encoded in the `CLAIM` table at the top of the script (exit 1 on any mismatch). The table covers Sec. 3.3, 4.1, 4.2 and the Table 2 throughput row; hardware utilisation is checked separately by `verify_resources_REV2.py` (step 6). Claims outside the table are not machine-checked. `verify_all.py` runs it as step 5 of the one-command repository check, together with the MANIFEST, report-count, artifact-MD5, bitstream-zip and Table 2 checks; its exit code is 0 only if all six steps pass:
 
 ```
 python verify_all.py

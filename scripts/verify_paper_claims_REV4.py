@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# VERIFY-PAPER-CLAIMS-REV4-2026-09-13
+# VERIFY-PAPER-CLAIMS-REV4-2026-09-13 (REV4b: block [8] adds the test-segregated spans and the Table 2 throughput figures)
 # REV4: adds a hard assertion block [7] that compares the computed values against the SUBMITTED digits below and
 #       exits 1 on any mismatch (REV3 only printed values for eyeball comparison). verify_all.py REV3 gates on this.
 #       Block [3] (NMR max vs ODG min in W=11..14) is informational only: the manuscript makes no claim about it.
@@ -7,8 +7,10 @@
 #   results/metrics/matrices/esr_510.csv, nmr_510.csv, odg_510.csv   (cell,source,width,value)
 #   results/metrics/raw/peaq_fleet_REV3.csv                         (cell,src,width,odg,total_nmr,...)
 #   results/analysis/errspec_T1T3_REV4_510.csv                      (block [6])
+#   results/analysis/heldout_srcmean_span_REV1.csv                  (block [8], kind=model_srcmean rows)
+#   results/hardware/campaign_results.csv                           (block [8], cyc_hw and fl_x_rt over 102 builds)
 # Checks Sec. 3.3 / 4.1 / 4.2 claims of the ICASSP 2027 submission. Read-only.
-# Usage: python scripts/verify_paper_claims_REV4.py [repo_root]      exit 0 = every submitted digit reproduced
+# Usage: python scripts/verify_paper_claims_REV4.py [repo_root]      exit 0 = every manuscript claim encoded in CLAIM reproduced
 # ---- SUBMITTED DIGITS (edit here if the manuscript wording changes) ----
 CLAIM = {
   'input_md5': {'esr_510.csv':'7E3AB6F1CF7DE74E4001D713B678F0F4','nmr_510.csv':'81BC7B7865081127301059CA55E7A24C',
@@ -20,6 +22,9 @@ CLAIM = {
   'gaps': {'rodent_max':3,'rodent_mod':4,'gt_max':5,'gt_mod':3,'fl_max':6,'fl_mod':4}, 'gap_mean': 4.2,  # [4b] Table 1
   'r_nmr': 0.997, 'nmr_offset_dB': -1.7,                                       # [5] Sec. 3.3
   'coh_below_at_nmr_max': 0.5, 'esr_at_last_coh_ge': -4.0,                     # [6] Sec. 4.2
+  'heldout_gaps': {'rodent_max':2,'rodent_mod':3,'gt_max':4,'gt_mod':3,'fl_max':4,'fl_mod':3}, 'heldout_gap_mean': 3.2,  # [8] Sec. 4.1 test-segregated
+  'cyc_hw_range': (140.5, 142.5), 'kernel_xrt_range': (14.6, 14.8), 'e2e_xrt_range': (14.0, 14.2),   # [8] Sec. 4.3 / Table 2; kernel xRT = 100 MHz / cyc_hw / 48 kHz
+  'fclk_mhz': 100.0, 'fs_hz': 48000,
 }
 import sys, os, csv, hashlib, numpy as np
 root = sys.argv[1] if len(sys.argv) > 1 else '.'
@@ -111,7 +116,18 @@ if True:
               '| NMR max:', nmrmax.get(c), '| mean ESR at last coh>=0.5 W:', round(e[W.index(max(hi))],1) if hi else None,
               '(paper: coherence falls below 0.5 at the NMR max; high coherence co-occurs with ESR >= -4 dB)')
 
-print('\n[7] ASSERTIONS against the submitted digits')
+print('\n[8] test-segregated spans (source mean over bass+gtr4ib) and Table 2 throughput')
+hs = P('results','analysis','heldout_srcmean_span_REV1.csv')
+HGAP = {}
+for r in csv.reader(open(hs)):
+    if r and r[0] == 'model_srcmean': HGAP[r[1]] = int(r[5])
+print('  held-out gaps', HGAP, 'mean', round(sum(HGAP.values())/6, 2))
+cr = P('results','hardware','campaign_results.csv'); crows = list(csv.DictReader(open(cr)))
+CYC = [float(r['cyc_hw']) for r in crows]; FLX = [float(r['fl_x_rt']) for r in crows]; FCLK = {float(r['fclk_mhz']) for r in crows}
+KX = [CLAIM['fclk_mhz']*1e6/c/CLAIM['fs_hz'] for c in CYC]
+print(f'  campaign rows {len(crows)}  fclk {sorted(FCLK)}  cyc_hw {min(CYC)}..{max(CYC)}  kernel xRT {min(KX):.2f}..{max(KX):.2f}  end-to-end fl_x_rt {min(FLX)}..{max(FLX)}')
+
+print('\n[7] ASSERTIONS against the manuscript claims encoded in CLAIM')
 fails = []
 def chk(name, ok, got): 
     fails.append(name) if not ok else None; print(f'  [{"PASS" if ok else "FAIL"}] {name}: {got}')
@@ -128,5 +144,10 @@ chk('[5] r', round(R_NMR, 3) == CLAIM['r_nmr'], round(R_NMR, 4)); chk('[5] offse
 for c, (coh_at, esr_at) in COH6.items():
     chk(f'[6] {c} coherence < {CLAIM["coh_below_at_nmr_max"]} at NMR max', coh_at < CLAIM['coh_below_at_nmr_max'], round(coh_at, 3))
     chk(f'[6] {c} mean ESR >= {CLAIM["esr_at_last_coh_ge"]} dB at last coh>=0.5 W', esr_at is not None and esr_at >= CLAIM['esr_at_last_coh_ge'], round(esr_at, 1) if esr_at is not None else None)
-print('VERIFY-PAPER-CLAIMS-REV4:', 'ALL SUBMITTED DIGITS REPRODUCED' if not fails else f'{len(fails)} MISMATCH: ' + ', '.join(fails))
+chk('[8] held-out per-model gaps', HGAP == CLAIM['heldout_gaps'], HGAP); chk('[8] held-out mean gap', round(sum(HGAP.values())/6, 1) == CLAIM['heldout_gap_mean'], round(sum(HGAP.values())/6, 2))
+chk('[8] 102 campaign rows at 100 MHz', len(crows) == 102 and FCLK == {CLAIM['fclk_mhz']}, (len(crows), sorted(FCLK)))
+chk('[8] cyc_hw range', (round(min(CYC),1), round(max(CYC),1)) == CLAIM['cyc_hw_range'], (min(CYC), max(CYC)))
+chk('[8] kernel xRT range', (round(min(KX),1), round(max(KX),1)) == CLAIM['kernel_xrt_range'], (round(min(KX),2), round(max(KX),2)))
+chk('[8] end-to-end xRT range', (round(min(FLX),1), round(max(FLX),1)) == CLAIM['e2e_xrt_range'], (min(FLX), max(FLX)))
+print('VERIFY-PAPER-CLAIMS-REV4:', 'ALL ENCODED CLAIMS REPRODUCED' if not fails else f'{len(fails)} MISMATCH: ' + ', '.join(fails))
 sys.exit(0 if not fails else 1)
