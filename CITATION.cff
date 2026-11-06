@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+title: "fpga-neural-audio: fixed-point GRU audio effect models on FPGA"
+authors:
+  - family-names: Sheffield
+    given-names: Hope
+    email: hsheffield@scu.edu
+version: 1.0.0
+date-released: 2026-11-06
+license: MIT
+repository-code: https://github.com/hopecsheffield-1122/fpga-neural-audio
